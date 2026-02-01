@@ -8,9 +8,9 @@ spring:
 
   # Database Configuration
   datasource:
-    url: jdbc:mysql://localhost:3306/rasrasplastics?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    username: root
-    password: 
+    url: jdbc:mysql://srv989.hstgr.io:3306/u517885545_rasras_plastic?useSSL=true&allowPublicKeyRetrieval=true    username: root
+    username: u517885545_rasras_plastic
+    password: RasRas-plastic5
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 10
