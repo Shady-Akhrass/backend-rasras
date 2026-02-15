@@ -23,6 +23,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.security.core.GrantedAuthority;
 
 @Service
 @RequiredArgsConstructor
@@ -71,16 +74,23 @@ public class AuthService {
                 .map(e -> e.getFirstNameAr() + " " + e.getLastNameAr())
                 .orElse("مستخدم");
 
+        List<String> permissions = userPrincipal.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .filter(a -> !a.startsWith("ROLE_"))
+                .collect(Collectors.toList());
+
         return LoginResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .tokenType("Bearer")
                 .expiresIn(86400000L) // 24 hours
                 .userId(userPrincipal.getId())
+                .employeeId(user.getEmployeeId())
                 .username(userPrincipal.getUsername())
                 .roleName(user.getRole().getRoleNameEn())
                 .roleCode(user.getRole().getRoleCode())
                 .fullNameAr(fullNameAr)
+                .permissions(permissions)
                 .build();
     }
 
@@ -88,7 +98,7 @@ public class AuthService {
         String refreshToken = request.getRefreshToken();
         String username = jwtTokenProvider.extractUsername(refreshToken);
 
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsernameWithPermissions(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
         UserPrincipal userPrincipal = UserPrincipal.create(user);
@@ -104,15 +114,22 @@ public class AuthService {
                 .map(e -> e.getFirstNameAr() + " " + e.getLastNameAr())
                 .orElse("مستخدم");
 
+        List<String> permissions = userPrincipal.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .filter(a -> !a.startsWith("ROLE_"))
+                .collect(Collectors.toList());
+
         return LoginResponse.builder()
                 .accessToken(newAccessToken)
                 .refreshToken(refreshToken) // Return same refresh token or rotate it (policy dependent)
                 .tokenType("Bearer")
                 .userId(userPrincipal.getId())
+                .employeeId(user.getEmployeeId())
                 .username(userPrincipal.getUsername())
                 .roleName(user.getRole().getRoleNameEn())
                 .roleCode(user.getRole().getRoleCode())
                 .fullNameAr(fullNameAr)
+                .permissions(permissions)
                 .build();
     }
 
