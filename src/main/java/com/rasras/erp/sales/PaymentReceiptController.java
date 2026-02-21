@@ -1,8 +1,10 @@
 package com.rasras.erp.sales;
 
 import com.rasras.erp.shared.dto.ApiResponse;
+import com.rasras.erp.shared.security.SecurityConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
 @RequestMapping("/sales/receipts")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
+@PreAuthorize(SecurityConstants.SALES_SECTION)
 public class PaymentReceiptController {
 
     private final PaymentReceiptService receiptService;
@@ -41,5 +44,10 @@ public class PaymentReceiptController {
     public ResponseEntity<ApiResponse<Void>> deleteReceipt(@PathVariable Integer id) {
         receiptService.deleteReceipt(id);
         return ResponseEntity.ok(ApiResponse.success(null));
+    }
+
+    @PostMapping("/{id}/submit")
+    public ResponseEntity<ApiResponse<PaymentReceiptDto>> submitForApproval(@PathVariable Integer id) {
+        return ResponseEntity.ok(ApiResponse.success(receiptService.submitForApproval(id)));
     }
 }

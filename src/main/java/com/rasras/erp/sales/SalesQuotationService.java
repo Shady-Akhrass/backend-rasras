@@ -8,6 +8,7 @@ import com.rasras.erp.inventory.PriceList;
 import com.rasras.erp.inventory.PriceListRepository;
 import com.rasras.erp.inventory.UnitOfMeasure;
 import com.rasras.erp.inventory.UnitRepository;
+import com.rasras.erp.approval.ApprovalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,10 +24,13 @@ import java.util.stream.Collectors;
 public class SalesQuotationService {
 
     private final SalesQuotationRepository quotationRepository;
+    // Trivial comment to force recompilation after DTO updates
     private final CustomerRepository customerRepository;
     private final ItemRepository itemRepository;
     private final UnitRepository unitRepository;
     private final PriceListRepository priceListRepository;
+    private final CustomerRequestRepository requestRepository;
+    private final ApprovalService approvalService;
 
     @Transactional(readOnly = true)
     public List<SalesQuotationDto> getAllQuotations() {
@@ -46,32 +50,44 @@ public class SalesQuotationService {
     public SalesQuotationDto createQuotation(SalesQuotationDto dto) {
         SalesQuotation quotation = new SalesQuotation();
         quotation.setQuotationNumber(generateQuotationNumber());
-        quotation.setQuotationDate(dto.getQuotationDate() != null ? dto.getQuotationDate() : LocalDateTime.now());
+        quotation.setQuotationDate(
+                dto.getQuotationDate() != null ? dto.getQuotationDate().atStartOfDay() : LocalDateTime.now());
         quotation.setValidUntilDate(dto.getValidUntilDate());
-        
+
         Customer customer = customerRepository.findById(dto.getCustomerId())
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
         quotation.setCustomer(customer);
-        
+
         quotation.setContactId(dto.getContactId());
         quotation.setSalesRepId(dto.getSalesRepId());
         quotation.setCurrency(dto.getCurrency() != null ? dto.getCurrency() : "EGP");
         quotation.setExchangeRate(dto.getExchangeRate() != null ? dto.getExchangeRate() : BigDecimal.ONE);
-        
+
         if (dto.getPriceListId() != null) {
             PriceList priceList = priceListRepository.findById(dto.getPriceListId())
                     .orElse(null);
             quotation.setPriceList(priceList);
         }
-        
+
         quotation.setSubTotal(dto.getSubTotal() != null ? dto.getSubTotal() : BigDecimal.ZERO);
-        quotation.setDiscountPercentage(dto.getDiscountPercentage() != null ? dto.getDiscountPercentage() : BigDecimal.ZERO);
+        quotation.setDiscountPercentage(
+                dto.getDiscountPercentage() != null ? dto.getDiscountPercentage() : BigDecimal.ZERO);
         quotation.setDiscountAmount(dto.getDiscountAmount() != null ? dto.getDiscountAmount() : BigDecimal.ZERO);
         quotation.setTaxAmount(dto.getTaxAmount() != null ? dto.getTaxAmount() : BigDecimal.ZERO);
+        quotation.setDeliveryCost(dto.getDeliveryCost() != null ? dto.getDeliveryCost() : BigDecimal.ZERO);
+        quotation.setOtherCosts(dto.getOtherCosts() != null ? dto.getOtherCosts() : BigDecimal.ZERO);
         quotation.setTotalAmount(dto.getTotalAmount() != null ? dto.getTotalAmount() : BigDecimal.ZERO);
         quotation.setPaymentTerms(dto.getPaymentTerms());
         quotation.setDeliveryTerms(dto.getDeliveryTerms());
+
+        if (dto.getRequestId() != null) {
+            CustomerRequest request = requestRepository.findById(dto.getRequestId())
+                    .orElse(null);
+            quotation.setCustomerRequest(request);
+        }
+
         quotation.setStatus(dto.getStatus() != null ? dto.getStatus() : "Draft");
+        quotation.setApprovalStatus(dto.getApprovalStatus() != null ? dto.getApprovalStatus() : "Pending");
         quotation.setNotes(dto.getNotes());
         quotation.setTermsAndConditions(dto.getTermsAndConditions());
         quotation.setCreatedBy(dto.getCreatedBy() != null ? dto.getCreatedBy() : 1);
@@ -95,36 +111,50 @@ public class SalesQuotationService {
         SalesQuotation quotation = quotationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Sales Quotation not found"));
 
-        if (!"Draft".equals(quotation.getStatus())) {
-            throw new RuntimeException("Cannot edit quotation that is not in Draft status");
+        if (!"Draft".equals(quotation.getStatus()) && !"Rejected".equals(quotation.getStatus())) {
+            throw new RuntimeException("Cannot edit quotation that is not in Draft or Rejected status");
+        }
+
+        // Reset approval status if rejected and being edited
+        if ("Rejected".equals(quotation.getStatus())) {
+            quotation.setApprovalStatus("Pending");
         }
 
         quotation.setValidUntilDate(dto.getValidUntilDate());
-        
+
         if (dto.getCustomerId() != null && !dto.getCustomerId().equals(quotation.getCustomer().getId())) {
             Customer customer = customerRepository.findById(dto.getCustomerId())
                     .orElseThrow(() -> new RuntimeException("Customer not found"));
             quotation.setCustomer(customer);
         }
-        
+
         quotation.setContactId(dto.getContactId());
         quotation.setSalesRepId(dto.getSalesRepId());
         quotation.setCurrency(dto.getCurrency());
         quotation.setExchangeRate(dto.getExchangeRate());
-        
+
         if (dto.getPriceListId() != null) {
             PriceList priceList = priceListRepository.findById(dto.getPriceListId())
                     .orElse(null);
             quotation.setPriceList(priceList);
         }
-        
+
         quotation.setSubTotal(dto.getSubTotal());
         quotation.setDiscountPercentage(dto.getDiscountPercentage());
         quotation.setDiscountAmount(dto.getDiscountAmount());
         quotation.setTaxAmount(dto.getTaxAmount());
+        quotation.setDeliveryCost(dto.getDeliveryCost());
+        quotation.setOtherCosts(dto.getOtherCosts());
         quotation.setTotalAmount(dto.getTotalAmount());
         quotation.setPaymentTerms(dto.getPaymentTerms());
         quotation.setDeliveryTerms(dto.getDeliveryTerms());
+
+        if (dto.getRequestId() != null) {
+            CustomerRequest request = requestRepository.findById(dto.getRequestId())
+                    .orElse(null);
+            quotation.setCustomerRequest(request);
+        }
+
         quotation.setNotes(dto.getNotes());
         quotation.setTermsAndConditions(dto.getTermsAndConditions());
         quotation.setUpdatedBy(dto.getUpdatedBy() != null ? dto.getUpdatedBy() : 1);
@@ -147,14 +177,35 @@ public class SalesQuotationService {
     }
 
     @Transactional
+    public SalesQuotationDto submitForApproval(Integer id) {
+        SalesQuotation quotation = quotationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Sales Quotation not found"));
+
+        if (!"Draft".equals(quotation.getStatus()) && !"Rejected".equals(quotation.getStatus())) {
+            throw new RuntimeException("Sales Quotation must be in Draft or Rejected status to submit");
+        }
+
+        quotation.setStatus("Pending");
+        SalesQuotation saved = quotationRepository.save(quotation);
+
+        // Initiate approval workflow
+        approvalService.initiateApproval("QUOTATION_APPROVAL", "SalesQuotation", saved.getId(),
+                saved.getQuotationNumber(), saved.getCreatedBy() != null ? saved.getCreatedBy() : 1,
+                saved.getTotalAmount());
+
+        return mapToDto(saved);
+    }
+
+    @Transactional
     public void deleteQuotation(Integer id) {
         SalesQuotation quotation = quotationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Sales Quotation not found"));
-        
-        if (!"Draft".equals(quotation.getStatus())) {
-            throw new RuntimeException("Cannot delete quotation that is not in Draft status");
+
+        if (!"Draft".equals(quotation.getStatus()) && !"Pending".equals(quotation.getStatus())
+                && !"Rejected".equals(quotation.getStatus())) {
+            throw new RuntimeException("Cannot delete quotation that is not in Draft, Pending, or Rejected status");
         }
-        
+
         quotationRepository.delete(quotation);
     }
 
@@ -162,11 +213,11 @@ public class SalesQuotationService {
     public SalesQuotationDto convertToSalesOrder(Integer quotationId) {
         SalesQuotation quotation = quotationRepository.findById(quotationId)
                 .orElseThrow(() -> new RuntimeException("Sales Quotation not found"));
-        
-        if (!"Accepted".equals(quotation.getStatus())) {
-            throw new RuntimeException("Quotation must be accepted before converting to Sales Order");
+
+        if (!"Approved".equals(quotation.getStatus())) {
+            throw new RuntimeException("Quotation must be approved before converting to Sales Order");
         }
-        
+
         // This will be handled by SalesOrderService
         // For now, just return the quotation DTO
         return mapToDto(quotation);
@@ -180,7 +231,7 @@ public class SalesQuotationService {
         SalesQuotationDto dto = SalesQuotationDto.builder()
                 .id(quotation.getId())
                 .quotationNumber(quotation.getQuotationNumber())
-                .quotationDate(quotation.getQuotationDate())
+                .quotationDate(quotation.getQuotationDate() != null ? quotation.getQuotationDate().toLocalDate() : null)
                 .validUntilDate(quotation.getValidUntilDate())
                 .customerId(quotation.getCustomer().getId())
                 .customerNameAr(quotation.getCustomer().getCustomerNameAr())
@@ -197,11 +248,16 @@ public class SalesQuotationService {
                 .paymentTerms(quotation.getPaymentTerms())
                 .deliveryTerms(quotation.getDeliveryTerms())
                 .status(quotation.getStatus())
+                .approvalStatus(quotation.getApprovalStatus())
                 .sentDate(quotation.getSentDate())
                 .acceptedDate(quotation.getAcceptedDate())
                 .rejectedReason(quotation.getRejectedReason())
                 .notes(quotation.getNotes())
                 .termsAndConditions(quotation.getTermsAndConditions())
+                .requestId(
+                        quotation.getCustomerRequest() != null ? quotation.getCustomerRequest().getRequestId() : null)
+                .deliveryCost(quotation.getDeliveryCost())
+                .otherCosts(quotation.getOtherCosts())
                 .createdAt(quotation.getCreatedAt())
                 .createdBy(quotation.getCreatedBy())
                 .updatedAt(quotation.getUpdatedAt())
@@ -249,7 +305,7 @@ public class SalesQuotationService {
     private SalesQuotationItem mapItemToEntity(SalesQuotationItemDto dto, SalesQuotation quotation) {
         Item item = itemRepository.findById(dto.getItemId())
                 .orElseThrow(() -> new RuntimeException("Item not found"));
-        
+
         UnitOfMeasure unit = unitRepository.findById(dto.getUnitId())
                 .orElseThrow(() -> new RuntimeException("Unit not found"));
 

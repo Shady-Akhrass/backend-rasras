@@ -1,2 +1,7 @@
-com\rasras\erp\ModularityTests.class
+com\rasras\erp\security\PermissionSecurityIntegrationTests$SystemAdmin.class
+com\rasras\erp\security\PermissionSecurityIntegrationTests$Unauthenticated.class
+com\rasras\erp\security\PermissionSecurityIntegrationTests$AuthenticatedWithoutProcurement.class
+com\rasras\erp\security\PermissionSecurityIntegrationTests$BuyerWithProcurementSection.class
 com\rasras\erp\RasrasplasticsApplicationTests.class
+com\rasras\erp\ModularityTests.class
+com\rasras\erp\security\PermissionSecurityIntegrationTests.class

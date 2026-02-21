@@ -18,9 +18,17 @@ import com.rasras.erp.inventory.UnitRepository;
 import com.rasras.erp.inventory.ItemRepository;
 import com.rasras.erp.inventory.WarehouseRepository;
 import com.rasras.erp.finance.PaymentVoucherRepository;
+import com.rasras.erp.sales.SalesOrderRepository;
+import com.rasras.erp.sales.SalesQuotationRepository;
+import com.rasras.erp.sales.SalesInvoiceRepository;
+import com.rasras.erp.sales.DeliveryOrderRepository;
+import com.rasras.erp.sales.StockIssueNoteRepository;
+import com.rasras.erp.sales.PaymentReceiptRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import org.springframework.data.domain.PageRequest;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -52,6 +60,12 @@ public class ApprovalService {
     private final UnitRepository unitRepo;
     private final WarehouseRepository warehouseRepo;
     private final PaymentVoucherRepository voucherRepo;
+    private final SalesOrderRepository salesOrderRepo;
+    private final SalesQuotationRepository salesQuotationRepo;
+    private final SalesInvoiceRepository salesInvoiceRepo;
+    private final DeliveryOrderRepository deliveryOrderRepo;
+    private final StockIssueNoteRepository stockIssueNoteRepo;
+    private final PaymentReceiptRepository paymentReceiptRepo;
 
     @Transactional
     public ApprovalRequest initiateApproval(String workflowCode, String docType, Integer docId,
@@ -135,22 +149,30 @@ public class ApprovalService {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        List<ApprovalRequest> requests = requestRepo.findByStatusIn(List.of("Pending", "InProgress"));
+        List<ApprovalRequest> requests = requestRepo
+                .findByStatusInWithCurrentStepAndApproverRole(List.of("Pending", "InProgress"));
 
-        // Filter requests
+        // Filter requests: اعتماداً على كود الدور (roleCode) لتفادي اختلاف الـ ID بين
+        // الخطوة والمستخدم
         List<ApprovalRequest> filteredRequests;
         if ("ADMIN".equalsIgnoreCase(user.getRole().getRoleCode())) {
             filteredRequests = requests;
         } else {
+            String userRoleCode = user.getRole().getRoleCode();
             filteredRequests = requests.stream()
                     .filter(req -> {
                         ApprovalWorkflowStep step = req.getCurrentStep();
                         if (step == null)
                             return false;
                         if ("ROLE".equals(step.getApproverType())) {
-                            return user.getRole().getRoleId().equals(step.getApproverRole().getRoleId());
+                            if (step.getApproverRole() == null)
+                                return false;
+                            // مقارنة بكود الدور حتى لو اختلف RoleID (مثلاً مدير المالي FM)
+                            return userRoleCode != null
+                                    && userRoleCode.equalsIgnoreCase(step.getApproverRole().getRoleCode());
                         } else {
-                            return user.getUserId().equals(step.getApproverUser().getUserId());
+                            return step.getApproverUser() != null
+                                    && user.getUserId().equals(step.getApproverUser().getUserId());
                         }
                     })
                     .collect(Collectors.toList());
@@ -158,6 +180,34 @@ public class ApprovalService {
 
         // Map to DTOs
         return filteredRequests.stream().map(this::mapToDto).collect(Collectors.toList());
+    }
+
+    /** سجل الاعتمادات — آخر الإجراءات (من اعتمد ومتى) للشفافية والتدقيق */
+    @Transactional(readOnly = true)
+    public List<ApprovalAuditDto> getRecentApprovalActions(int limit) {
+        return actionRepo.findAllByOrderByActionDateDesc(PageRequest.of(0, Math.min(limit, 200)))
+                .stream()
+                .map(this::mapActionToAuditDto)
+                .collect(Collectors.toList());
+    }
+
+    private ApprovalAuditDto mapActionToAuditDto(ApprovalAction action) {
+        ApprovalRequest req = action.getRequest();
+        return ApprovalAuditDto.builder()
+                .actionId(action.getId())
+                .requestId(req.getId())
+                .documentType(req.getDocumentType())
+                .documentId(req.getDocumentId())
+                .documentNumber(req.getDocumentNumber())
+                .workflowName(req.getWorkflow().getWorkflowName())
+                .stepName(action.getStep().getStepName())
+                .actionType(action.getActionType())
+                .actionByUser(action.getActionByUser().getUsername())
+                .actionDate(action.getActionDate())
+                .comments(action.getComments())
+                .totalAmount(req.getTotalAmount())
+                .requestStatus(req.getStatus())
+                .build();
     }
 
     private ApprovalRequestDto mapToDto(ApprovalRequest req) {
@@ -547,6 +597,92 @@ public class ApprovalService {
                 }
                 voucherRepo.save(pv);
             });
+        } else if ("SalesOrder".equalsIgnoreCase(type)) {
+            salesOrderRepo.findById(id).ifPresent(so -> {
+                so.setApprovalStatus(status);
+                if ("Approved".equals(status)) {
+                    so.setStatus("Approved");
+                    so.setApprovedByUserId(userId);
+                    so.setApprovedDate(LocalDateTime.now());
+                } else if ("Rejected".equals(status)) {
+                    so.setStatus("Rejected");
+                }
+                salesOrderRepo.save(so);
+            });
+        } else if ("SalesQuotation".equalsIgnoreCase(type)) {
+            salesQuotationRepo.findById(id).ifPresent(sq -> {
+                sq.setApprovalStatus(status);
+                if ("Approved".equals(status)) {
+                    sq.setStatus("Approved");
+                } else if ("Rejected".equals(status)) {
+                    sq.setStatus("Rejected");
+                    // NEW: Capture rejection comment
+                    if (request.getActions() != null && !request.getActions().isEmpty()) {
+                        // Get the latest rejection comment
+                        request.getActions().stream()
+                                .filter(a -> "Rejected".equals(a.getActionType()))
+                                .reduce((first, second) -> second) // Get the last rejection action
+                                .ifPresent(action -> sq.setRejectedReason(action.getComments()));
+                    }
+                }
+                salesQuotationRepo.save(sq);
+            });
+        } else if ("SalesInvoice".equalsIgnoreCase(type)) {
+            salesInvoiceRepo.findById(id).ifPresent(inv -> {
+                inv.setApprovalStatus(status);
+                if ("Approved".equals(status)) {
+                    inv.setStatus("Approved");
+                } else if ("Rejected".equals(status)) {
+                    inv.setStatus("Rejected");
+                }
+                salesInvoiceRepo.save(inv);
+            });
+        } else if ("PaymentReceipt".equalsIgnoreCase(type)) {
+            paymentReceiptRepo.findById(id).ifPresent(pr -> {
+                pr.setApprovalStatus(status);
+                if ("Approved".equals(status)) {
+                    pr.setStatus("Approved");
+                } else if ("Rejected".equals(status)) {
+                    pr.setStatus("Rejected");
+                }
+                paymentReceiptRepo.save(pr);
+            });
+        } else if ("StockIssueNote".equalsIgnoreCase(type)) {
+            stockIssueNoteRepo.findById(id).ifPresent(note -> {
+                note.setStatus(status);
+                if ("Approved".equals(status)) {
+                    Integer approverId = note.getUpdatedBy() != null ? note.getUpdatedBy() : userId;
+                    Integer warehouseId = note.getWarehouse().getId();
+
+                    if (note.getItems() != null) {
+                        for (com.rasras.erp.sales.StockIssueNoteItem item : note.getItems()) {
+                            BigDecimal qty = item.getIssuedQty();
+                            BigDecimal unitCost = item.getUnitCost() != null ? item.getUnitCost() : BigDecimal.ZERO;
+
+                            inventoryService.updateStock(
+                                    item.getItem().getId(),
+                                    warehouseId,
+                                    qty,
+                                    "OUT",
+                                    "ISSUE",
+                                    "StockIssueNote",
+                                    note.getId(),
+                                    note.getIssueNoteNumber(),
+                                    unitCost,
+                                    approverId);
+
+                            // Update Sales Order delivered quantity if applicable
+                            com.rasras.erp.sales.SalesOrderItem soItem = item.getSalesOrderItem();
+                            if (soItem != null) {
+                                BigDecimal newDelivered = (soItem.getDeliveredQty() != null ? soItem.getDeliveredQty()
+                                        : BigDecimal.ZERO).add(qty);
+                                soItem.setDeliveredQty(newDelivered);
+                            }
+                        }
+                    }
+                }
+                stockIssueNoteRepo.save(note);
+            });
         }
     }
 
@@ -653,11 +789,12 @@ public class ApprovalService {
 
         // 3. تم تعطيل approval workflow للـ PO لأنه معتمد تلقائياً بعد اعتماد المقارنة
         // PO يُنشأ فقط من مقارنة معتمدة، لذلك يُعتبر معتمداً مباشرة
-        savedPo.setStatus("Confirmed");  // معتمد مباشرة
-        savedPo.setApprovalStatus("Approved");  // معتمد تلقائياً
+        savedPo.setStatus("Confirmed"); // معتمد مباشرة
+        savedPo.setApprovalStatus("Approved"); // معتمد تلقائياً
         poRepo.save(savedPo);
-        
-        System.out.println("✅ PO " + savedPo.getPoNumber() + " created and auto-approved from comparison " + qc.getComparisonNumber());
+
+        System.out.println("✅ PO " + savedPo.getPoNumber() + " created and auto-approved from comparison "
+                + qc.getComparisonNumber());
     }
 
     private String generatePONumber() {

@@ -50,6 +50,17 @@ public class PurchaseRequisitionService {
                                 .collect(Collectors.toList());
         }
 
+        /** PRs created by the current user only (for Sales section). */
+        @Transactional(readOnly = true)
+        public List<PurchaseRequisitionDto> getPRsForSalesUser(Integer createdByUserId) {
+                if (createdByUserId == null) {
+                        return List.of();
+                }
+                return prRepository.findByCreatedBy(createdByUserId).stream()
+                                .map(this::mapToDto)
+                                .collect(Collectors.toList());
+        }
+
         @Transactional(readOnly = true)
         public PurchaseRequisitionDto getPurchaseRequisitionById(Integer id) {
                 return prRepository.findById(id)
@@ -62,7 +73,7 @@ public class PurchaseRequisitionService {
         public PurchaseRequisitionDto createPurchaseRequisition(PurchaseRequisitionDto dto) {
                 PurchaseRequisition pr = new PurchaseRequisition();
                 pr.setPrNumber(generatePrNumber());
-                pr.setPrDate(LocalDateTime.now());
+                pr.setPrDate(dto.getPrDate() != null ? dto.getPrDate().atStartOfDay() : LocalDateTime.now());
                 pr.setRequestedByDept(departmentRepository.findById(dto.getRequestedByDeptId())
                                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                                                 "Department not found")));
@@ -252,7 +263,8 @@ public class PurchaseRequisitionService {
                 if (!comparisons.isEmpty()) {
                         selectedQuotationId = comparisons.stream()
                                         .filter(c -> "Approved".equals(c.getApprovalStatus()))
-                                        .map(c -> c.getSelectedQuotation() != null ? c.getSelectedQuotation().getId() : null)
+                                        .map(c -> c.getSelectedQuotation() != null ? c.getSelectedQuotation().getId()
+                                                        : null)
                                         .filter(java.util.Objects::nonNull)
                                         .findFirst()
                                         .orElse(null);
@@ -288,7 +300,7 @@ public class PurchaseRequisitionService {
                 return PurchaseRequisitionDto.builder()
                                 .id(pr.getId())
                                 .prNumber(pr.getPrNumber())
-                                .prDate(pr.getPrDate())
+                                .prDate(pr.getPrDate() != null ? pr.getPrDate().toLocalDate() : null)
                                 .requestedByDeptId(pr.getRequestedByDept().getDepartmentId())
                                 .requestedByDeptName(pr.getRequestedByDept().getDepartmentNameAr())
                                 .requestedByUserId(pr.getRequestedByUser().getUserId())

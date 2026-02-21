@@ -17,7 +17,7 @@ import java.util.List;
 public class SalesQuotationDto {
     private Integer id;
     private String quotationNumber;
-    private LocalDateTime quotationDate;
+    private LocalDate quotationDate;
     private LocalDate validUntilDate;
     private Integer customerId;
     private String customerNameAr;
@@ -35,7 +35,12 @@ public class SalesQuotationDto {
     private BigDecimal totalAmount;
     private String paymentTerms;
     private String deliveryTerms;
+    private Integer requestId;
+    private BigDecimal deliveryCost;
+    private BigDecimal otherCosts;
+
     private String status;
+    private String approvalStatus;
     private LocalDateTime sentDate;
     private LocalDateTime acceptedDate;
     private String rejectedReason;

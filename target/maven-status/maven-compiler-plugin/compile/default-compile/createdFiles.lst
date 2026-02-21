@@ -1,5 +1,6 @@
 com\rasras\erp\procurement\PurchaseRequisitionItem.class
 com\rasras\erp\procurement\PurchaseReturnItem$PurchaseReturnItemBuilder.class
+com\rasras\erp\auth\dto\CurrentUserDto$CurrentUserDtoBuilder.class
 com\rasras\erp\auth\dto\LoginRequest$LoginRequestBuilder.class
 com\rasras\erp\inventory\QualityParameterRepository.class
 com\rasras\erp\employee\Employee$EmployeeBuilder.class
@@ -54,6 +55,7 @@ com\rasras\erp\supplier\SupplierInvoiceService.class
 com\rasras\erp\user\dto\UserDto.class
 com\rasras\erp\sales\SalesQuotationItem.class
 com\rasras\erp\approval\ApprovalActionRepository.class
+com\rasras\erp\sales\Vehicle$VehicleBuilder.class
 com\rasras\erp\procurement\PRLifecycleDto$ApprovalStage.class
 com\rasras\erp\employee\package-info.class
 com\rasras\erp\finance\dto\SupplierWithInvoices$SupplierWithInvoicesBuilder.class
@@ -62,6 +64,7 @@ com\rasras\erp\hr\dto\EmployeeShiftDto$EmployeeShiftDtoBuilder.class
 com\rasras\erp\sales\StockIssueNoteDto.class
 com\rasras\erp\procurement\PurchaseOrderItemDto$PurchaseOrderItemDtoBuilder.class
 com\rasras\erp\accounting\dto\CreateJournalEntryRequest.class
+com\rasras\erp\sales\VehicleController.class
 com\rasras\erp\inventory\UnitDto.class
 com\rasras\erp\RasrasErpApplication.class
 com\rasras\erp\procurement\SupplierQuotationItemDto.class
@@ -69,8 +72,10 @@ com\rasras\erp\accounting\dto\JournalEntryDto$JournalEntryDtoBuilder.class
 com\rasras\erp\inventory\StockAdjustmentController.class
 com\rasras\erp\sales\StockIssueNoteRepository.class
 com\rasras\erp\inventory\StockMovement$StockMovementBuilder.class
+com\rasras\erp\shared\security\SecurityConstants.class
 com\rasras\erp\hr\EmployeeShiftRepository.class
 com\rasras\erp\inventory\StockTransferController.class
+com\rasras\erp\sales\CustomerRequest.class
 com\rasras\erp\sales\SalesInvoiceItem$SalesInvoiceItemBuilder.class
 com\rasras\erp\user\RolePermissionRepository.class
 com\rasras\erp\supplier\SupplierInvoiceItem$SupplierInvoiceItemBuilder.class
@@ -105,6 +110,7 @@ com\rasras\erp\sales\SalesInvoiceController.class
 com\rasras\erp\portal\PublicPortalController.class
 com\rasras\erp\sales\SalesInvoiceService.class
 com\rasras\erp\supplier\SupplierInvoiceService$InvoiceMatchingResult.class
+com\rasras\erp\sales\VehicleRepository.class
 com\rasras\erp\approval\ApprovalWorkflow.class
 com\rasras\erp\user\Role.class
 com\rasras\erp\inventory\PriceList$PriceListBuilder.class
@@ -132,6 +138,7 @@ com\rasras\erp\procurement\SupplierQuotationItem.class
 com\rasras\erp\system\SystemSettingController.class
 com\rasras\erp\approval\ApprovalLimitRepository.class
 com\rasras\erp\procurement\PRLifecycleDto$SourcingStage.class
+com\rasras\erp\sales\CustomerRequestService.class
 com\rasras\erp\procurement\SupplierQuotationController.class
 com\rasras\erp\crm\CustomerContact.class
 com\rasras\erp\procurement\PRLifecycleDto$OrderingStage.class
@@ -164,6 +171,7 @@ com\rasras\erp\company\CompanyController.class
 com\rasras\erp\shared\security\GlobalRequestLoggingFilter.class
 com\rasras\erp\hr\PayrollDetail$PayrollDetailBuilder.class
 com\rasras\erp\procurement\SupplierQuotationService.class
+com\rasras\erp\approval\ApprovalAuditDto.class
 com\rasras\erp\procurement\dto\PurchaseReturnDto.class
 com\rasras\erp\inventory\StockBalanceDto$StockBalanceDtoBuilder.class
 com\rasras\erp\approval\ApprovalRequest.class
@@ -180,6 +188,7 @@ com\rasras\erp\inventory\StockMovementService.class
 com\rasras\erp\inventory\GRNItemDto$GRNItemDtoBuilder.class
 com\rasras\erp\procurement\PurchaseOrderRepository.class
 com\rasras\erp\inventory\StockBalanceRepository.class
+com\rasras\erp\sales\CustomerRequestDto$CustomerRequestDtoBuilder.class
 com\rasras\erp\hr\LeaveType$LeaveTypeBuilder.class
 com\rasras\erp\procurement\SupplierQuotationRepository.class
 com\rasras\erp\approval\ApprovalLimitService.class
@@ -224,6 +233,7 @@ com\rasras\erp\user\PermissionRepository.class
 com\rasras\erp\inventory\QualityParameter$QualityParameterBuilder.class
 com\rasras\erp\system\SystemSetting$SystemSettingBuilder.class
 com\rasras\erp\employee\dto\CreateEmployeeRequest.class
+com\rasras\erp\sales\CustomerRequestDeliveryScheduleDto.class
 com\rasras\erp\approval\ApprovalWorkflowStep$ApprovalWorkflowStepBuilder.class
 com\rasras\erp\procurement\PurchaseRequisitionService.class
 com\rasras\erp\sales\StockIssueNoteItemDto$StockIssueNoteItemDtoBuilder.class
@@ -245,6 +255,7 @@ com\rasras\erp\inventory\WarehouseLocationRepository.class
 com\rasras\erp\inventory\QualityInspectionController.class
 com\rasras\erp\procurement\QuotationComparisonService.class
 com\rasras\erp\dashboard\DashboardService.class
+com\rasras\erp\sales\VehicleService.class
 com\rasras\erp\procurement\PRLifecycleDto$QualityStage.class
 com\rasras\erp\sales\SalesOrderRepository.class
 com\rasras\erp\sales\SalesOrderItem$SalesOrderItemBuilder.class
@@ -264,6 +275,7 @@ com\rasras\erp\finance\dto\InvoiceItemComparison$InvoiceItemComparisonBuilder.cl
 com\rasras\erp\procurement\SupplierQuotationDto.class
 com\rasras\erp\approval\ApprovalLimit$ApprovalLimitBuilder.class
 com\rasras\erp\employee\Employee.class
+com\rasras\erp\sales\CustomerRequestController.class
 com\rasras\erp\sales\SalesOrder.class
 com\rasras\erp\sales\PaymentReceiptDto$PaymentReceiptDtoBuilder.class
 com\rasras\erp\inventory\StockAdjustmentDto.class
@@ -271,19 +283,23 @@ com\rasras\erp\sales\StockIssueNoteItem.class
 com\rasras\erp\inventory\QualityInspectionResult$QualityInspectionResultBuilder.class
 com\rasras\erp\shared\config\JpaConfig.class
 com\rasras\erp\approval\ApprovalRequest$ApprovalRequestBuilder.class
+com\rasras\erp\system\DatabaseService$TableStatus.class
 com\rasras\erp\inventory\GRNItem$GRNItemBuilder.class
 com\rasras\erp\inventory\ItemCategory.class
 com\rasras\erp\procurement\RFQItemDto$RFQItemDtoBuilder.class
 com\rasras\erp\finance\PaymentVoucher.class
 com\rasras\erp\system\SystemSetting.class
 com\rasras\erp\inventory\ItemQualitySpec$ItemQualitySpecBuilder.class
+com\rasras\erp\sales\VehicleDto.class
 com\rasras\erp\user\dto\RoleDto$RoleDtoBuilder.class
 com\rasras\erp\procurement\PurchaseRequisition$PurchaseRequisitionBuilder.class
 com\rasras\erp\inventory\QualityInspectionRequestDto$ParameterResultRequest.class
+com\rasras\erp\sales\VehicleDto$VehicleDtoBuilder.class
 com\rasras\erp\sales\SalesQuotationService.class
 com\rasras\erp\shared\config\WebConfig.class
 com\rasras\erp\user\UserController.class
 com\rasras\erp\procurement\RFQItemDto.class
+com\rasras\erp\sales\CustomerRequestDeliveryScheduleDto$CustomerRequestDeliveryScheduleDtoBuilder.class
 com\rasras\erp\procurement\PRLifecycleDto$PRLifecycleDtoBuilder.class
 com\rasras\erp\auth\dto\LoginResponse.class
 com\rasras\erp\hr\PayrollDetail.class
@@ -313,6 +329,7 @@ com\rasras\erp\system\SystemSettingDto$SystemSettingDtoBuilder.class
 com\rasras\erp\auth\package-info.class
 com\rasras\erp\sales\DeliveryOrderService.class
 com\rasras\erp\inventory\ItemRepository.class
+com\rasras\erp\shared\jpa\SafeBigDecimalConverter.class
 com\rasras\erp\inventory\UnitService.class
 com\rasras\erp\auth\dto\RefreshTokenRequest.class
 com\rasras\erp\finance\PaymentVoucherService.class
@@ -320,7 +337,9 @@ com\rasras\erp\supplier\SupplierRepository.class
 com\rasras\erp\shared\security\package-info.class
 com\rasras\erp\employee\dto\UpdateMyProfileRequest.class
 com\rasras\erp\inventory\PriceListItem$PriceListItemBuilder.class
+com\rasras\erp\sales\CustomerRequestRepository.class
 com\rasras\erp\user\dto\UpdateUserRequest.class
+com\rasras\erp\sales\Vehicle.class
 com\rasras\erp\user\Permission$PermissionBuilder.class
 com\rasras\erp\finance\dto\PaymentVoucherDto.class
 com\rasras\erp\sales\PaymentReceipt$PaymentReceiptBuilder.class
@@ -340,11 +359,13 @@ com\rasras\erp\inventory\WarehouseController.class
 com\rasras\erp\procurement\PurchaseOrderItemDto.class
 com\rasras\erp\inventory\StockTransferDto$StockTransferDtoBuilder.class
 com\rasras\erp\supplier\dto\SupplierInvoiceDto$SupplierInvoiceDtoBuilder.class
+com\rasras\erp\sales\CustomerRequestItem$CustomerRequestItemBuilder.class
 com\rasras\erp\shared\config\SecurityConfig.class
 com\rasras\erp\inventory\PriceListDto.class
 com\rasras\erp\inventory\PriceListItem.class
 com\rasras\erp\supplier\SupplierOutstandingDto.class
 com\rasras\erp\shared\controller\FileUploadController.class
+com\rasras\erp\auth\dto\CurrentUserDto.class
 com\rasras\erp\hr\WorkShift$WorkShiftBuilder.class
 com\rasras\erp\procurement\PurchaseReturn.class
 com\rasras\erp\inventory\PriceListItemDto.class
@@ -403,6 +424,7 @@ com\rasras\erp\hr\Holiday$HolidayBuilder.class
 com\rasras\erp\procurement\PurchaseReturnRepository.class
 com\rasras\erp\inventory\GoodsReceiptNote$GoodsReceiptNoteBuilder.class
 com\rasras\erp\inventory\QualityParameterController.class
+com\rasras\erp\sales\CustomerRequestItem.class
 com\rasras\erp\sales\StockIssueNoteItemDto.class
 com\rasras\erp\approval\ApprovalWorkflowStep.class
 com\rasras\erp\inventory\QualityInspection$QualityInspectionBuilder.class
@@ -425,14 +447,17 @@ com\rasras\erp\company\CompanyInfo.class
 com\rasras\erp\inventory\ItemCategoryDto.class
 com\rasras\erp\inventory\QualityInspectionRequestDto$ItemInspectionRequest.class
 com\rasras\erp\supplier\SupplierItemDto$SupplierItemDtoBuilder.class
+com\rasras\erp\sales\CustomerRequestDto.class
 com\rasras\erp\procurement\QuotationComparison$QuotationComparisonBuilder.class
 com\rasras\erp\sales\SalesInvoice.class
 com\rasras\erp\approval\ApprovalService.class
 com\rasras\erp\sales\SalesOrderDto$SalesOrderDtoBuilder.class
 com\rasras\erp\shared\dto\ApiResponse$ApiResponseBuilder.class
 com\rasras\erp\inventory\QualityParameterDto.class
+com\rasras\erp\sales\CustomerRequestItemDto$CustomerRequestItemDtoBuilder.class
 com\rasras\erp\sales\StockIssueNote$StockIssueNoteBuilder.class
 com\rasras\erp\supplier\SupplierBank$SupplierBankBuilder.class
+com\rasras\erp\user\dto\AssignPermissionsRequest.class
 com\rasras\erp\hr\WorkShiftRepository.class
 com\rasras\erp\supplier\SupplierItem$SupplierItemBuilder.class
 com\rasras\erp\hr\PayrollRepository.class
@@ -444,11 +469,14 @@ com\rasras\erp\procurement\PurchaseRequisition.class
 com\rasras\erp\accounting\dto\UpdateJournalEntryRequest.class
 com\rasras\erp\shared\exception\BadRequestException.class
 com\rasras\erp\inventory\StockMovementRepository.class
+com\rasras\erp\sales\CustomerRequestDeliverySchedule.class
+com\rasras\erp\approval\ApprovalAuditDto$ApprovalAuditDtoBuilder.class
 com\rasras\erp\crm\Customer$CustomerBuilder.class
 com\rasras\erp\inventory\PeriodicInventoryReportDto$PeriodicInventoryReportDtoBuilder.class
 com\rasras\erp\inventory\QualityParameterService.class
 com\rasras\erp\procurement\SupplierQuotationItemDto$SupplierQuotationItemDtoBuilder.class
 com\rasras\erp\inventory\PeriodicInventoryReportDto.class
+com\rasras\erp\sales\CustomerRequest$CustomerRequestBuilder.class
 com\rasras\erp\inventory\UnitRepository.class
 com\rasras\erp\sales\SalesOrderItem.class
 com\rasras\erp\employee\dto\DepartmentDto$DepartmentDtoBuilder.class
@@ -488,6 +516,7 @@ com\rasras\erp\sales\SalesQuotationItemDto$SalesQuotationItemDtoBuilder.class
 com\rasras\erp\inventory\QualityInspectionRequestDto.class
 com\rasras\erp\inventory\UnitOfMeasure.class
 com\rasras\erp\approval\ApprovalLimit.class
+com\rasras\erp\sales\CustomerRequestDeliverySchedule$CustomerRequestDeliveryScheduleBuilder.class
 com\rasras\erp\shared\dto\ApiResponse.class
 com\rasras\erp\user\RoleRepository.class
 com\rasras\erp\hr\LeaveTypeRepository.class
@@ -510,4 +539,5 @@ com\rasras\erp\finance\dto\PaymentVoucherDto$PaymentVoucherDtoBuilder.class
 com\rasras\erp\procurement\RFQItem$RFQItemBuilder.class
 com\rasras\erp\sales\SalesOrderItemDto.class
 com\rasras\erp\shared\exception\GlobalExceptionHandler.class
+com\rasras\erp\sales\CustomerRequestItemDto.class
 com\rasras\erp\inventory\QualityInspectionResult.class

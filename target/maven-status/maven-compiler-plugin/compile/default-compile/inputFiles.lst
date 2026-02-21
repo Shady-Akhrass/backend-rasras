@@ -7,6 +7,7 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\SalesQuot
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\StockMovementService.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\hr\HrService.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\ItemCategoryService.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\CustomerRequestDeliverySchedule.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\user\dto\CreateUserRequest.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\shared\audit\AuditableEntity.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\accounting\dto\UpdateJournalEntryRequest.java
@@ -31,6 +32,7 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\bootstrap\Workf
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\supplier\SupplierService.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\PriceListService.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\SalesOrder.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\VehicleRepository.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\procurement\PurchaseOrder.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\crm\CustomerRepository.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\employee\EmployeeRepository.java
@@ -38,6 +40,7 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\employee\dto\Up
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\procurement\PurchaseReturnItemRepository.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\shared\config\SecurityConfig.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\hr\PayrollDetail.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\CustomerRequestRepository.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\PriceListController.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\StockAdjustmentItem.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\ItemQualitySpecController.java
@@ -57,6 +60,7 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\SalesOrde
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\ItemController.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\hr\SalaryComponentRepository.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\procurement\PurchaseReturnRepository.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\VehicleService.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\user\dto\UpdateUserRequest.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\procurement\PurchaseRequisitionItemDto.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\procurement\PurchaseRequisitionController.java
@@ -72,6 +76,7 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\procurement\Quo
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\hr\HolidayRepository.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\SalesQuotationService.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\procurement\PurchaseOrderDto.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\Vehicle.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\supplier\Supplier.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\employee\Employee.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\user\Permission.java
@@ -93,6 +98,7 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\Stock
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\procurement\PurchaseOrderRepository.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\user\PermissionRepository.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\ItemCategoryRepository.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\CustomerRequestItemDto.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\SalesInvoiceItem.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\employee\dto\UpdateEmployeeRequest.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\finance\dto\PaymentVoucherDto.java
@@ -113,6 +119,7 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\supplier\Suppli
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\approval\ApprovalWorkflowStepRepository.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\shared\security\JwtAuthenticationFilter.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\PriceListItemRepository.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\CustomerRequestItem.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\supplier\SupplierRepository.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\crm\Customer.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\PaymentReceiptController.java
@@ -136,6 +143,8 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\hr\PayrollDetai
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\StockBalanceRepository.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\user\dto\UserDto.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\shared\dto\ApiResponse.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\user\dto\AssignPermissionsRequest.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\approval\ApprovalAuditDto.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\system\DatabaseController.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\approval\ApprovalWorkflowRepository.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\PeriodicInventoryReportDto.java
@@ -144,6 +153,7 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\auth\AuthContro
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\crm\CustomerContact.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\supplier\SupplierOutstandingDto.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\StockAdjustmentRepository.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\shared\jpa\SafeBigDecimalConverter.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\dto\ItemBelowMinDto.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\StockAdjustment.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\procurement\PurchaseRequisitionService.java
@@ -163,6 +173,7 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\user\Permission
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\StockBalance.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\StockTransferService.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\system\SystemSetting.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\VehicleController.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\finance\PaymentVoucher.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\shared\config\SwaggerConfig.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\SalesInvoiceController.java
@@ -191,6 +202,7 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\shared\audit\pa
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\crm\CustomerService.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\accounting\dto\CreateJournalEntryRequest.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\supplier\SupplierDto.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\CustomerRequest.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\user\package-info.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\ItemCategory.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\employee\Department.java
@@ -203,6 +215,7 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\Quali
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\Item.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\hr\WorkShift.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\hr\dto\HolidayDto.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\shared\security\SecurityConstants.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\accounting\JournalEntry.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\procurement\PurchaseReturnController.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\StockIssueNoteRepository.java
@@ -234,6 +247,7 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\employee\Employ
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\procurement\RFQService.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\system\LogService.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\approval\ApprovalRequestDto.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\auth\dto\CurrentUserDto.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\PriceListDto.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\SalesInvoiceItemDto.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\GoodsReceiptNoteDto.java
@@ -242,6 +256,7 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\procurement\Pur
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\StockMovementController.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\user\User.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\hr\dto\AttendanceDto.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\CustomerRequestDto.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\hr\PayrollRepository.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\supplier\SupplierController.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\accounting\dto\JournalEntryDto.java
@@ -263,6 +278,7 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\Quali
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\QualityInspectionResult.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\crm\CustomerContactDto.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\company\CompanyInfoRepository.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\CustomerRequestService.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\finance\PaymentVoucherPdfService.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\supplier\SupplierItem.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\StockAdjustmentItemRepository.java
@@ -297,8 +313,10 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\employee\Depart
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\finance\dto\InvoiceItemComparison.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\inventory\StockTransferDto.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\user\UserService.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\CustomerRequestController.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\DeliveryOrderController.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\supplier\SupplierStatus.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\CustomerRequestDeliveryScheduleDto.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\portal\PublicPortalController.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\procurement\PurchaseOrderController.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\StockAvailabilityWarningDto.java
@@ -339,3 +357,4 @@ D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\supplier\Suppli
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\procurement\PurchaseReturnService.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\company\CompanyController.java
 D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\accounting\JournalEntryService.java
+D:\2026\Rasras-Plastics\web\backend\src\main\java\com\rasras\erp\sales\VehicleDto.java

@@ -1,8 +1,10 @@
 package com.rasras.erp.sales;
 
 import com.rasras.erp.shared.dto.ApiResponse;
+import com.rasras.erp.shared.security.SecurityConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.List;
 @RequestMapping("/sales/issue-notes")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
+@PreAuthorize(SecurityConstants.SALES_SECTION)
 public class StockIssueNoteController {
 
     private final StockIssueNoteService issueNoteService;
@@ -70,5 +73,10 @@ public class StockIssueNoteController {
             @PathVariable Integer id,
             @RequestParam(required = false) Integer approvedByUserId) {
         return ResponseEntity.ok(ApiResponse.success(issueNoteService.approve(id, approvedByUserId)));
+    }
+
+    @PostMapping("/{id}/submit")
+    public ResponseEntity<ApiResponse<StockIssueNoteDto>> submitForApproval(@PathVariable Integer id) {
+        return ResponseEntity.ok(ApiResponse.success(issueNoteService.submitForApproval(id)));
     }
 }
