@@ -1,0 +1,45 @@
+[2026-02-16T18:44:33.171136600] ERROR in executeSqlScript: StatementCallback; bad SQL grammar [try]
+[2026-02-16T20:35:21.186720] ERROR in executeSqlScript: StatementCallback; bad SQL grammar [CREATE TABLE customerrequests (
+    RequestID INT PRIMARY KEY AUTO_INCREMENT,
+    RequestNumber VARCHAR(20) NOT NULL UNIQUE, -- e.g. CR-2026-001
+    RequestDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CustomerID INT NOT NULL,
+    Status VARCHAR(20) DEFAULT 'Pending', -- Pending, Processed, Cancelled
+    Notes VARCHAR(1000),
+    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CreatedBy INT,
+    FOREIGN KEY (CustomerID) REFERENCES customers(CustomerID)
+);
+
+CREATE TABLE customerrequestitems (
+    ItemID INT PRIMARY KEY AUTO_INCREMENT,
+    RequestID INT NOT NULL,
+    ProductID INT, -- Optional link to inventory
+    ProductName VARCHAR(200) NOT NULL, -- Free text allowed
+    Quantity DECIMAL(18,2) NOT NULL,
+    Notes VARCHAR(500),
+    FOREIGN KEY (RequestID) REFERENCES customerrequests(RequestID)
+);
+]
+[2026-02-16T20:37:44.804055] ERROR in executeSqlScript: StatementCallback; bad SQL grammar [CREATE TABLE customerrequests (
+    RequestID INT PRIMARY KEY AUTO_INCREMENT,
+    RequestNumber VARCHAR(20) NOT NULL UNIQUE, -- e.g. CR-2026-001
+    RequestDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CustomerID INT NOT NULL,
+    Status VARCHAR(20) DEFAULT 'Pending', -- Pending, Processed, Cancelled
+    Notes VARCHAR(1000),
+    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CreatedBy INT,
+    FOREIGN KEY (CustomerID) REFERENCES customers(CustomerID)
+);
+
+CREATE TABLE customerrequestitems (
+    ItemID INT PRIMARY KEY AUTO_INCREMENT,
+    RequestID INT NOT NULL,
+    ProductID INT, -- Optional link to inventory
+    ProductName VARCHAR(200) NOT NULL, -- Free text allowed
+    Quantity DECIMAL(18,2) NOT NULL,
+    Notes VARCHAR(500),
+    FOREIGN KEY (RequestID) REFERENCES customerrequests(RequestID)
+);
+]

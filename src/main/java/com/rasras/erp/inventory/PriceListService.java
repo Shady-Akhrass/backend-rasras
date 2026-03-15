@@ -153,4 +153,32 @@ public class PriceListService {
                 .discountPercentage(dto.getDiscountPercentage())
                 .build();
     }
+
+    /**
+     * Syncs all price list entries for a given item to its latest selling price.
+     * Called automatically when item prices are updated from procurement.
+     */
+    @Transactional
+    public void syncPriceListsForItem(Integer itemId, java.math.BigDecimal newSellingPrice,
+            java.math.BigDecimal newPurchasePrice) {
+        List<PriceListItem> entries = itemRepository.findByItemId(itemId);
+        for (PriceListItem entry : entries) {
+            PriceList list = repository.findById(entry.getPriceListId()).orElse(null);
+            if (list == null)
+                continue;
+
+            java.math.BigDecimal priceToSet = null;
+            if ("SELLING".equals(list.getListType())) {
+                priceToSet = newSellingPrice;
+            } else if ("BUYING".equals(list.getListType())) {
+                priceToSet = newPurchasePrice;
+            }
+
+            if (priceToSet != null && priceToSet.compareTo(java.math.BigDecimal.ZERO) > 0) {
+                entry.setUnitPrice(priceToSet);
+                entry.setLegacyPrice(priceToSet);
+                itemRepository.save(entry);
+            }
+        }
+    }
 }
